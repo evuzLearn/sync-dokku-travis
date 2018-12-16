@@ -1,7 +1,8 @@
 import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import { User as UserEntity } from '../Entities/User';
 
 @Entity()
-export class User {
+export class User extends UserEntity {
   @ObjectIdColumn()
   id?: ObjectID;
   @Column()
@@ -11,9 +12,7 @@ export class User {
   @Column()
   age?: number;
 
-  constructor({firstName, lastName, age}: User = <any>{}) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.age = age;
-  } 
+  constructor(user: User = <any>{}) {
+    super(user);
+  }
 }

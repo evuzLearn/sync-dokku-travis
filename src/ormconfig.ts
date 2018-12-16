@@ -7,7 +7,7 @@ const ormConfig: MongoConnectionOptions = {
   synchronize: true,
   logging: false,
   useNewUrlParser: true,
-  entities: ['src/entity/**/*.ts'],
+  entities: ['src/domain/**/*.entity.ts'],
   migrations: ['src/migration/**/*.ts'],
   subscribers: ['src/subscriber/**/*.ts'],
   cli: {
