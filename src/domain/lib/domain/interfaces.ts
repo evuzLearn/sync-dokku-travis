@@ -8,5 +8,5 @@ export interface IGetConfig {
 }
 
 export interface IGetUseCase {
-    useCase: string;
+  useCase: string;
 }

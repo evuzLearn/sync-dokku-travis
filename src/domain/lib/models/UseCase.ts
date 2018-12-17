@@ -1,6 +1,5 @@
-import { Service } from './Service';
+import { IService } from './Service';
 
-export interface UseCase {
-  service: Service;
-  execute: () => Promise<any>;
+export interface IUseCase {
+  execute: (args?: any) => Promise<any>;
 }

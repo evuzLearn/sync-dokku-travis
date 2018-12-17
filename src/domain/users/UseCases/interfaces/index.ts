@@ -1,5 +1,9 @@
 import { IService } from '../../../lib/models/Service';
 
-export interface IGetAllUsersUseCase {
+interface IUserUseCase {
   service: IService;
 }
+
+export interface IGetAllUsersUseCase extends IUserUseCase {}
+
+export interface ISaveUserUseCase extends IUserUseCase {}

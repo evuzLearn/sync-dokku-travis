@@ -1,3 +1,3 @@
 export interface IService {
-  execute: () => any;
+  execute: (args?: any) => any;
 }

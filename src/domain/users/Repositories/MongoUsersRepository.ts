@@ -13,4 +13,8 @@ export class MongoUsersRepository implements UsersRepository {
   getAllUsers() {
     return this.userRepository.find();
   }
+
+  saveUser({ user }) {
+    return this.userRepository.save(user);
+  }
 }
