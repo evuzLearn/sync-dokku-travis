@@ -1,10 +1,31 @@
 import { Domain } from './lib/domain';
+
 import { UsersUseCaseFactory } from './users/UseCases/factory';
 
-export function init () {
-  const useCases = {
-    get_all_users: UsersUseCaseFactory.getAllUsersUseCase(),
-  };
-  
-  return new Domain({ useCases });
+class DomainInstance {
+  static useCases() {
+    return {
+      get_all_users: UsersUseCaseFactory.getAllUsersUseCase(),
+      save_user: UsersUseCaseFactory.saveUsersUseCase(),
+    };
+  }
+
+  private internalDomain: Domain<ReturnType<typeof DomainInstance.useCases>>;
+  public get domain() {
+    return this.internalDomain;
+  }
+
+  public init() {
+    this.internalDomain = new Domain({ useCases: DomainInstance.useCases() });
+    return this.internalDomain;
+  }
 }
+
+export const instance = new DomainInstance();
+
+export const getDomain = () => {
+  if (!instance.domain) {
+    instance.init();
+  }
+  return instance.domain;
+};

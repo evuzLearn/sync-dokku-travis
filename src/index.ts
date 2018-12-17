@@ -2,26 +2,23 @@ import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 
 import { getOrmConfig } from './ormconfig';
-import { init as initDomain } from './domain';
+import { instance } from './domain';
 
 getOrmConfig()
   .then(ormConfig => createConnection(ormConfig))
   .then(async () => {
-    const domain = initDomain();
+    const domain = instance.init();
     console.log('Inserting a new user into the database...');
-    // const user = new User({
-    //   firstName: 'Timber',
-    //   lastName: 'Saw',
-    //   age: 25,
-    // });
-    // await connection.manager.save(user);
-    // console.log(`Saved a new user with id: ${user.id}`);
-    // console.log('Loading users from the database...');
-    // const users = await connection.manager.find(User);
-    // console.log('Loaded users: ', users);
-
-    const getAllUsers = domain.get({ useCase: 'get_all_users' });
-    const users = await getAllUsers.execute();
-    console.log('Loaded users: ', users);
+    const newUser = {
+      firstName: 'Jake',
+      lastName: 'Sio',
+      age: 25,
+    };
+    const user = await domain.get({ useCase: 'save_user' }).execute({
+      user: newUser,
+    });
+    console.log(`Saved a new user with id: ${user.id}`);
+    const users = await domain.get({ useCase: 'get_all_users' }).execute();
+    console.log('Loaded users: ', users.length);
   })
   .catch(error => console.log(error));
