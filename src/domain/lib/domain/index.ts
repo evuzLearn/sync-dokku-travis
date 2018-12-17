@@ -1,11 +1,10 @@
-import { ISetConfig, IGetConfig, IGetUseCase } from './interfaces';
-import { UseCase } from '../models/UseCase';
+import { ISetConfig, IGetUseCase, IGetConfig, IDomain } from './interfaces';
 
-export class Domain {
-  private useCases: { [e: string]: UseCase };
+export class Domain<T> {
+  private useCases: T;
   private config: { [e: string]: any };
 
-  constructor({ useCases, config = {} }) {
+  constructor({ useCases, config = {} }: IDomain<T>) {
     this.useCases = useCases;
     this.config = config;
   }
@@ -18,7 +17,7 @@ export class Domain {
     return this.config[key];
   }
 
-  get({ useCase }: IGetUseCase) {
+  get<K extends keyof T>({ useCase }: IGetUseCase<T, K>): T[K] {
     return this.useCases[useCase];
   }
 }
