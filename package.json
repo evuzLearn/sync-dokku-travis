@@ -20,6 +20,7 @@
   },
   "scripts": {
     "start": "ts-node src/index.ts",
-    "dev": "nodemon --watch 'src/**/*.ts' -r dotenv/config --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts"
+    "dev": "nodemon --watch 'src/**/*.ts' -r dotenv/config --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
+    "format": "prettier --write 'src/**/*.ts'"
   }
 }
