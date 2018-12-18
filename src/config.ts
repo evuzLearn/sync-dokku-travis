@@ -4,4 +4,5 @@ export const config = {
   db_database: process.env.MONGO_DB,
   db_host: process.env.MONGO_HOST,
   db_port: +process.env.MONGO_PORT,
+  bot_token: process.env.TELEGRAM_TOKEN,
 };
