@@ -16,7 +16,10 @@ export class DomainInstance {
   }
 
   public init() {
+    if (this.domain) {
+      throw new Error('Domain has already been initiated');
+    }
     this.internalDomain = new Domain({ useCases: DomainInstance.useCases() });
-    return this.internalDomain;
+    return this.domain;
   }
 }
