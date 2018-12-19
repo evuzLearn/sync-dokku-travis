@@ -12,7 +12,7 @@ export interface IBot {
 
 export interface IBotTextFunctions {
   sendMessage(args: ISendMessage): Promise<Message>;
-  onReplyMessage(args: IOnReplyMessage): Promise<{ msg: Message }>
+  onReplyMessage(args: IOnReplyMessage): Promise<{ msg: Message }>;
 }
 
 export interface IAddTextListener {
@@ -22,7 +22,7 @@ export interface IAddTextListener {
 
 export interface IOnReplyMessage {
   chatId: number | string;
-  messageId: number | string,
+  messageId: number | string;
 }
 
 export interface ISendMessage {
