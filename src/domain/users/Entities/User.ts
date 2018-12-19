@@ -1,11 +1,11 @@
 export class User {
+  userId: number;
   firstName: string;
-  lastName?: string;
-  age?: number;
+  username?: string;
 
-  constructor({ firstName, lastName, age }: User) {
+  constructor({ firstName, username, userId }: User) {
+    this.userId = userId;
     this.firstName = firstName;
-    this.lastName = lastName;
-    this.age = age;
+    this.username = username;
   }
 }

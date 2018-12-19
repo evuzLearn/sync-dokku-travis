@@ -6,11 +6,11 @@ export class User extends UserEntity {
   @ObjectIdColumn()
   id?: ObjectID;
   @Column()
+  userId: number;
+  @Column()
   firstName: string;
   @Column()
-  lastName?: string;
-  @Column()
-  age?: number;
+  username?: string;
 
   constructor(user: User = <any>{}) {
     super(user);
