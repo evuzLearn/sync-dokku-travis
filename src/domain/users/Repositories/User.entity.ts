@@ -1,4 +1,4 @@
-import { Entity, ObjectIdColumn, ObjectID, Column } from 'typeorm';
+import { Entity, ObjectIdColumn, ObjectID, Column, Index } from 'typeorm';
 import { User as UserEntity } from '../Entities/User';
 
 @Entity()
@@ -6,6 +6,7 @@ export class User extends UserEntity {
   @ObjectIdColumn()
   id?: ObjectID;
   @Column()
+  @Index({ unique: true })
   userId: number;
   @Column()
   firstName: string;

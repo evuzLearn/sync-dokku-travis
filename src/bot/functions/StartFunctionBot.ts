@@ -21,9 +21,13 @@ export class StartFunctionBot extends FunctionBot {
   public execute({ msg: { from, chat }, botFunctions }: ITelegramBotOnText) {
     const chatId = chat.id;
     const name = from.first_name || from.username;
-    StartFunctionBot.saveUser({ user: from }).then(() => {
-      const text = `Hi ${name}`;
-      botFunctions.sendMessage({chatId, text});
-    })
+    const text = `Hi ${name}`;
+    StartFunctionBot.saveUser({ user: from })
+      .then(() => {
+        botFunctions.sendMessage({ chatId, text });
+      })
+      .catch(err => {
+        botFunctions.sendMessage({ chatId, text });
+      });
   }
 }
