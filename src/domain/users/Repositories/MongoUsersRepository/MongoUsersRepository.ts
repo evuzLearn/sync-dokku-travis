@@ -1,6 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
 
-import { UsersRepository } from './UsersRepository';
+import { UsersRepository } from '../UsersRepository';
 import { User } from './User.entity';
 
 export class MongoUsersRepository implements UsersRepository {

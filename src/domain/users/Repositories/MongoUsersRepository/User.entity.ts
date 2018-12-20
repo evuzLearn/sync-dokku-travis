@@ -1,5 +1,5 @@
 import { Entity, ObjectIdColumn, ObjectID, Column, Index } from 'typeorm';
-import { User as UserEntity } from '../Entities/User';
+import { User as UserEntity } from '../../Entities/User';
 
 @Entity()
 export class User extends UserEntity {
