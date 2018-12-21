@@ -1,7 +1,7 @@
 import { IService } from '../../lib/models/Service';
 import { ActivityRepository } from '../Repositories/ActivityRepository';
 import { Activity } from '../Entities/Activity';
-import { INewExpense, IExecuteNewExpense } from './interfaces';
+import { INewExpense } from './interfaces';
 
 export class NewExpenseService implements IService {
   private repository: ActivityRepository;
@@ -10,7 +10,7 @@ export class NewExpenseService implements IService {
     this.repository = repository;
   }
 
-  execute({ activity: { amount, ...rest } }: IExecuteNewExpense) {
+  execute({ activity: { amount, ...rest } }: { activity: Activity }) {
     const activity = {
       ...rest,
       amount: -amount,

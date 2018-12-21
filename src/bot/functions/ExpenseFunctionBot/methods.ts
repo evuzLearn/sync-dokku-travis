@@ -21,13 +21,13 @@ function methods() {
   };
 
   // TODO: Add interface Expense from domain
-  const getExpense = ({ userId, clean = false }: { userId: number | string, clean?: boolean }) => {
+  const getExpense = ({ userId, clean = false }: { userId: number | string; clean?: boolean }) => {
     const expense = expenses[userId];
     if (!expense || clean) {
       expenses[userId] = {};
     }
     return expense || expenses[userId];
-  }
+  };
 
   const askAmount = ({ msg, botFunctions }: ITelegramBotOnText): Promise<{ amount: number }> => {
     const chatId = msg.chat.id;
@@ -43,7 +43,7 @@ function methods() {
         }
         return { amount: +text };
       });
-  }
+  };
 
   const errorAmount = ({ msg, botFunctions }: ITelegramBotOnText): Promise<{ amount: number }> => {
     const chatId = msg.chat.id;
@@ -59,7 +59,7 @@ function methods() {
         }
         return { amount: +text };
       });
-  }
+  };
 
   const askConcept = ({ msg, botFunctions }: ITelegramBotOnText): Promise<{ concept: string }> => {
     const chatId = msg.chat.id;
@@ -72,9 +72,9 @@ function methods() {
       .then(({ msg: { text } }) => {
         return { concept: text };
       });
-  }
+  };
 
-  return { askAmount, errorAmount, askConcept, getExpense, confirmKeyboard }
+  return { askAmount, errorAmount, askConcept, getExpense, confirmKeyboard };
 }
 
 export const expenseFunctionBotMethods = methods();

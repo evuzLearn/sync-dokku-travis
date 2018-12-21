@@ -1,4 +1,4 @@
-import { IService } from '../../../lib/models/Service';
+import { IService } from '../../lib/models/Service';
 
 interface IUserUseCase {
   service: IService;

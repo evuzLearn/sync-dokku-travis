@@ -1,5 +1,5 @@
-import { UsersRepository } from '../../Repositories/UsersRepository';
-import { User } from '../../Entities/User';
+import { UsersRepository } from '../Repositories/UsersRepository';
+import { User } from '../Entities/User';
 
 interface IUserService {
   repository: UsersRepository;

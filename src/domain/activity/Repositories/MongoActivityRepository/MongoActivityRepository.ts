@@ -10,7 +10,7 @@ export class MongoActivityRepository implements ActivityRepository {
     this.activityRepository = getRepository(Activity);
   }
 
-  newActivity({ activity }) {
+  newActivity({ activity }: { activity: Activity }) {
     return this.activityRepository.save(activity);
   }
 }

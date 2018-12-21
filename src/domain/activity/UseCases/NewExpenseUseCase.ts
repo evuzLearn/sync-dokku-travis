@@ -1,6 +1,7 @@
 import { IService } from '../../lib/models/Service';
-import { INewActivityUseCase, IExecuteNewActivityUseCase } from './interfaces';
+import { INewActivityUseCase } from './interfaces';
 import { IUseCase } from '../../lib/models/UseCase';
+import { Activity } from '../Entities/Activity';
 
 export class NewExpenseUseCase implements IUseCase {
   private service: IService;
@@ -9,7 +10,7 @@ export class NewExpenseUseCase implements IUseCase {
     this.service = service;
   }
 
-  execute({ activity }: IExecuteNewActivityUseCase) {
+  execute({ activity }: { activity: Activity }) {
     return this.service.execute({ activity });
   }
 }

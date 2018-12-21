@@ -2,7 +2,7 @@ import { SendMessageOptions } from 'node-telegram-bot-api';
 
 import { FunctionBot } from '../models/FunctionBot';
 import { ITelegramBotOnText } from '../../interfaces';
-import { expenseFunctionBotMethods } from './methods'
+import { expenseFunctionBotMethods } from './methods';
 
 export class ExpenseFunctionBot extends FunctionBot {
   public regex = /\/expense/;
@@ -12,19 +12,20 @@ export class ExpenseFunctionBot extends FunctionBot {
     const userId = msg.from.id;
     const expense = expenseFunctionBotMethods.getExpense({ userId, clean: true });
 
-    expenseFunctionBotMethods.askAmount({ msg, botFunctions })
+    expenseFunctionBotMethods
+      .askAmount({ msg, botFunctions })
       .then(({ amount }) => {
         expense.amount = amount;
         return expenseFunctionBotMethods.askConcept({ msg, botFunctions });
       })
       .then(({ concept }) => {
         expense.concept = concept;
-        return { expense }
+        return { expense };
       })
       // TODO: Add interface Expense from domain
       .then(({ expense: { amount, concept } }) => {
         const opts: SendMessageOptions = {
-          reply_markup: expenseFunctionBotMethods.confirmKeyboard
+          reply_markup: expenseFunctionBotMethods.confirmKeyboard,
         };
         botFunctions.sendMessage({
           chatId,
