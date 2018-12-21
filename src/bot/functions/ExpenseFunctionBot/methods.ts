@@ -1,27 +1,27 @@
 import { isNumber } from '../../../utils/isNumber';
 import { InlineKeyboardMarkup } from 'node-telegram-bot-api';
 import { ITelegramBotOnText } from '../../interfaces';
+import { Activity } from '../../../domain/activity/Entities/Activity';
+import { CallbackQuery, CallbackQueryAddExpense } from './interfaces';
 
 function methods() {
-  // TODO: Add interface Expense from domain
-  const expenses: { [e: number]: any } = {};
+  const expenses: { [e: number]: Partial<Activity> } = {};
   const confirmKeyboard: InlineKeyboardMarkup = {
     inline_keyboard: [
       [
         {
           text: 'Yes',
-          callback_data: 'ADD_EXPENSE.YES',
+          callback_data: `${CallbackQuery.AddExpense}.${CallbackQueryAddExpense.Y}`,
         },
         {
           text: 'No',
-          callback_data: 'ADD_EXPENSE.NO',
+          callback_data: `${CallbackQuery.AddExpense}.${CallbackQueryAddExpense.N}`,
         },
       ],
     ],
   };
 
-  // TODO: Add interface Expense from domain
-  const getExpense = ({ userId, clean = false }: { userId: number | string; clean?: boolean }) => {
+  const getExpense = ({ userId, clean = false }: { userId: number | string; clean?: boolean }): Partial<Activity> => {
     const expense = expenses[userId];
     if (!expense || clean) {
       expenses[userId] = {};

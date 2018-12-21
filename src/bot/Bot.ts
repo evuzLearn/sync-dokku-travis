@@ -41,7 +41,7 @@ export class Bot {
       }
       this.callbackQuery[key] = callbackQueryFunction;
     });
-  }
+  };
 
   public addTextListener = ({ regex, fn }: IAddTextListener) => {
     this.bot.onText(regex, (msg, match) => {
@@ -69,13 +69,17 @@ export class Bot {
         throw new Error(`Bot#onCallbackQuery: the key ${key} hasn't been added`);
       }
       const data = callbackQuery.data.split('.').slice(1);
-      callbackQueryFunction({ data, msg: callbackQuery.message, botFunctions: this.callbackQueryFunctions }).then(() => {
-        this.bot.answerCallbackQuery(callbackQuery.id, {show_alert: true})
+      callbackQueryFunction({
+        data,
+        msg: { ...callbackQuery.message, from: callbackQuery.from },
+        botFunctions: this.callbackQueryFunctions,
+      }).then(() => {
+        this.bot.answerCallbackQuery(callbackQuery.id);
       });
     });
-  }
+  };
 
   private editMessage = ({ text, opts }: IEditMessage) => {
     return this.bot.editMessageText(text, opts);
-  }
+  };
 }

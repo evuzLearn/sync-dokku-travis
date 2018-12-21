@@ -3,6 +3,8 @@ import { SendMessageOptions, EditMessageTextOptions } from 'node-telegram-bot-ap
 import { FunctionBot } from '../models/FunctionBot';
 import { ITelegramBotOnText, IAddCallbackQuery, ICallbackQueryFunction } from '../../interfaces';
 import { expenseFunctionBotMethods } from './methods';
+import { getDomain } from '../../../domain';
+import { CallbackQuery, CallbackQueryAddExpense } from './interfaces';
 
 export class ExpenseFunctionBot extends FunctionBot {
   public regex = /\/expense/;
@@ -38,17 +40,26 @@ export class ExpenseFunctionBot extends FunctionBot {
   public callbackQuery(): IAddCallbackQuery[] {
     return [
       {
-        key: 'ADD_EXPENSE',
+        key: CallbackQuery.AddExpense,
         callbackQueryFunction: this.acceptExpense,
       },
     ];
   }
 
   private acceptExpense({ msg, data, botFunctions }: ICallbackQueryFunction) {
+    const userId = msg.from.id;
     const opts: EditMessageTextOptions = {
       message_id: msg.message_id,
       chat_id: msg.chat.id,
     };
-    return botFunctions.editMessageText({ opts, text: 'Message edited' });
+
+    if (data[0] === CallbackQueryAddExpense.N) {
+      return botFunctions.editMessageText({ opts, text: 'You can introduce a new /expense' });
+    }
+
+    const domain = getDomain();
+    const { amount, concept } = expenseFunctionBotMethods.getExpense({ userId });
+    domain.get({ useCase: 'new_expense' }).execute({ activity: { amount, concept } });
+    return botFunctions.editMessageText({ opts, text: 'Your expense have been added' });
   }
 }
