@@ -1,4 +1,4 @@
-import { ITelegramBotOnText, IAddTextListener } from '../../interfaces';
+import { ITelegramBotOnText, IAddTextListener, IAddCallbackQuery } from '../../interfaces';
 
 export abstract class FunctionBot {
   abstract regex: RegExp;
@@ -6,5 +6,9 @@ export abstract class FunctionBot {
 
   public add(): IAddTextListener {
     return { regex: this.regex, fn: this.execute };
+  }
+
+  public callbackQuery(): IAddCallbackQuery[] {
+    return [];
   }
 }

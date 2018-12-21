@@ -1,7 +1,7 @@
-import { SendMessageOptions } from 'node-telegram-bot-api';
+import { SendMessageOptions, EditMessageTextOptions } from 'node-telegram-bot-api';
 
 import { FunctionBot } from '../models/FunctionBot';
-import { ITelegramBotOnText } from '../../interfaces';
+import { ITelegramBotOnText, IAddCallbackQuery, ICallbackQueryFunction } from '../../interfaces';
 import { expenseFunctionBotMethods } from './methods';
 
 export class ExpenseFunctionBot extends FunctionBot {
@@ -33,5 +33,22 @@ export class ExpenseFunctionBot extends FunctionBot {
           text: `Summary. \nAmount: ${amount}€. \nConcept: ${concept}.\nIs correct?`,
         });
       });
+  }
+
+  public callbackQuery(): IAddCallbackQuery[] {
+    return [
+      {
+        key: 'ADD_EXPENSE',
+        callbackQueryFunction: this.acceptExpense,
+      },
+    ];
+  }
+
+  private acceptExpense({ msg, data, botFunctions }: ICallbackQueryFunction) {
+    const opts: EditMessageTextOptions = {
+      message_id: msg.message_id,
+      chat_id: msg.chat.id,
+    };
+    return botFunctions.editMessageText({ opts, text: 'Message edited' });
   }
 }
