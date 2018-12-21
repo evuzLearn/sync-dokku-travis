@@ -15,7 +15,7 @@ export class StartFunctionBot extends FunctionBot {
       username: user.username,
       firstName: user.first_name,
     };
-    return domain.get({ useCase: 'save_user' }).execute({ user: newUser });
+    return domain.get({ useCase: 'new_user' }).execute({ user: newUser });
   }
 
   public execute({ msg: { from, chat }, botFunctions }: ITelegramBotOnText) {

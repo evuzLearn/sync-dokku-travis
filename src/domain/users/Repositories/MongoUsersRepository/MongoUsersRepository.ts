@@ -14,7 +14,7 @@ export class MongoUsersRepository implements UsersRepository {
     return this.userRepository.find();
   }
 
-  saveUser({ user }: { user: User }) {
+  newUser({ user }: { user: User }) {
     return this.userRepository.save(user);
   }
 }

@@ -7,7 +7,7 @@ export class DomainInstance {
   static useCases() {
     return {
       get_all_users: UsersUseCaseFactory.getAllUsersUseCase(),
-      save_user: UsersUseCaseFactory.saveUsersUseCase(),
+      new_user: UsersUseCaseFactory.newUsersUseCase(),
       new_expense: ActivityUseCaseFactory.newExpenseUseCase(),
     };
   }

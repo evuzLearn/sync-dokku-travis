@@ -7,8 +7,8 @@ interface IUserService {
 
 export interface IGetAllUsersService extends IUserService {}
 
-export interface ISaveUserService extends IUserService {}
+export interface INewUserService extends IUserService {}
 
-export interface IExecuteSaveUserService {
+export interface IExecuteNewUserService {
   user: User;
 }

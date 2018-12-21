@@ -6,4 +6,4 @@ interface IUserUseCase {
 
 export interface IGetAllUsersUseCase extends IUserUseCase {}
 
-export interface ISaveUserUseCase extends IUserUseCase {}
+export interface INewUserUseCase extends IUserUseCase {}
