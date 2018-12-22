@@ -13,4 +13,8 @@ export class MongoActivityRepository implements ActivityRepository {
   newActivity({ activity }: { activity: Activity }) {
     return this.activityRepository.save(activity);
   }
+
+  getActivitiesByUserId({ userId }: { userId: Activity['userId'] }): Promise<Activity[]> {
+    return this.activityRepository.find({ where: { userId } });
+  }
 }
