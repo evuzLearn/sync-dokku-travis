@@ -5,6 +5,9 @@ import { Activity as ActivityEntity } from '../../Entities/Activity';
 export class Activity extends ActivityEntity {
   @ObjectIdColumn()
   id?: ObjectID;
+  @Index()
+  @Column()
+  userId: string | number;
   @Column()
   concept: string;
   @Column()

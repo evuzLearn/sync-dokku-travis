@@ -1,4 +1,5 @@
 import { SendMessageOptions, EditMessageTextOptions } from 'node-telegram-bot-api';
+import { startOfDay } from 'date-fns';
 
 import { FunctionBot } from '../models/FunctionBot';
 import { ITelegramBotOnText, IAddCallbackQuery, ICallbackQueryFunction } from '../../interfaces';
@@ -56,10 +57,11 @@ export class ExpenseFunctionBot extends FunctionBot {
     if (data[0] === CallbackQueryAddExpense.N) {
       return botFunctions.editMessageText({ opts, text: 'You can introduce a new /expense' });
     }
-
     const domain = getDomain();
     const { amount, concept } = expenseFunctionBotMethods.getExpense({ userId });
-    domain.get({ useCase: 'new_expense' }).execute({ activity: { amount, concept } });
+    domain
+      .get({ useCase: 'new_expense' })
+      .execute({ activity: { amount, concept, userId, date: startOfDay(Date.now()).getTime() } });
     return botFunctions.editMessageText({ opts, text: 'Your expense have been added' });
   }
 }

@@ -6,3 +6,4 @@ export interface IActivityUseCase {
 }
 
 export interface INewActivityUseCase extends IActivityUseCase {}
+export interface IGetActivitiesUseCase extends IActivityUseCase {}
