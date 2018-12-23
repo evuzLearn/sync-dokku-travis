@@ -22,11 +22,10 @@ function methods() {
   };
 
   const getExpense = ({ userId, clean = false }: { userId: number | string; clean?: boolean }): Partial<Activity> => {
-    const expense = expenses[userId];
-    if (!expense || clean) {
+    if (!expenses[userId] || clean) {
       expenses[userId] = {};
     }
-    return expense || expenses[userId];
+    return expenses[userId];
   };
 
   const askAmount = ({ msg, botFunctions }: ITelegramBotOnText): Promise<{ amount: number }> => {
