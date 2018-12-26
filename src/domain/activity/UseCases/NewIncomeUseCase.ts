@@ -1,12 +1,12 @@
 import { IService } from '../../lib/models/Service';
-import { INewExpenseUseCase } from './interfaces';
+import { INewIncomeUseCase } from './interfaces';
 import { IUseCase } from '../../lib/models/UseCase';
 import { Activity } from '../Entities/Activity';
 
-export class NewExpenseUseCase implements IUseCase {
+export class NewIncomeUseCase implements IUseCase {
   private service: IService;
 
-  constructor({ service }: INewExpenseUseCase) {
+  constructor({ service }: INewIncomeUseCase) {
     this.service = service;
   }
 

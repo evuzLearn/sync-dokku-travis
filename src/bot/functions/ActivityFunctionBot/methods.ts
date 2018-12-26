@@ -2,30 +2,15 @@ import { isNumber } from '../../../utils/isNumber';
 import { InlineKeyboardMarkup } from 'node-telegram-bot-api';
 import { ITelegramBotOnText } from '../../interfaces';
 import { Activity } from '../../../domain/activity/Entities/Activity';
-import { CallbackQuery, CallbackQueryAddExpense } from './interfaces';
+import { CallbackQuery, CallbackQueryAddActivity } from './interfaces';
 
 function methods() {
-  const expenses: { [e: number]: Partial<Activity> } = {};
-  const confirmKeyboard: InlineKeyboardMarkup = {
-    inline_keyboard: [
-      [
-        {
-          text: 'Yes',
-          callback_data: `${CallbackQuery.AddExpense}.${CallbackQueryAddExpense.Y}`,
-        },
-        {
-          text: 'No',
-          callback_data: `${CallbackQuery.AddExpense}.${CallbackQueryAddExpense.N}`,
-        },
-      ],
-    ],
-  };
-
-  const getExpense = ({ userId, clean = false }: { userId: number | string; clean?: boolean }): Partial<Activity> => {
-    if (!expenses[userId] || clean) {
-      expenses[userId] = {};
+  const activities: { [e: number]: Partial<Activity> } = {};
+  const getActivity = ({ userId, clean = false }: { userId: number | string; clean?: boolean }): Partial<Activity> => {
+    if (!activities[userId] || clean) {
+      activities[userId] = {};
     }
-    return expenses[userId];
+    return activities[userId];
   };
 
   const askAmount = ({ msg, botFunctions }: ITelegramBotOnText): Promise<{ amount: number }> => {
@@ -73,7 +58,22 @@ function methods() {
       });
   };
 
-  return { askAmount, errorAmount, askConcept, getExpense, confirmKeyboard };
+  const confirmKeyboard = (type: CallbackQuery): InlineKeyboardMarkup => ({
+    inline_keyboard: [
+      [
+        {
+          text: 'Yes',
+          callback_data: `${type}.${CallbackQueryAddActivity.Y}`,
+        },
+        {
+          text: 'No',
+          callback_data: `${CallbackQuery}.${CallbackQueryAddActivity.N}`,
+        },
+      ],
+    ],
+  });
+
+  return { askAmount, errorAmount, askConcept, getActivity, confirmKeyboard };
 }
 
 export const expenseFunctionBotMethods = methods();

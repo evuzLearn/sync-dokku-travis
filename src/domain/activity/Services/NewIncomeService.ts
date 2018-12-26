@@ -3,7 +3,7 @@ import { ActivityRepository } from '../Repositories/ActivityRepository';
 import { Activity } from '../Entities/Activity';
 import { INewExpense } from './interfaces';
 
-export class NewExpenseService implements IService {
+export class NewIncomeService implements IService {
   private repository: ActivityRepository;
 
   constructor({ repository }: INewExpense) {
@@ -13,7 +13,7 @@ export class NewExpenseService implements IService {
   execute({ activity: { amount, ...rest } }: { activity: Activity }) {
     const activity = {
       ...rest,
-      amount: amount > 0 ? -amount : amount,
+      amount: amount > 0 ? amount : -amount,
     };
     return this.repository.newActivity({ activity: new Activity(activity) });
   }

@@ -5,5 +5,6 @@ export interface IActivityUseCase {
   service: IService;
 }
 
-export interface INewActivityUseCase extends IActivityUseCase {}
+export interface INewExpenseUseCase extends IActivityUseCase {}
+export interface INewIncomeUseCase extends IActivityUseCase {}
 export interface IGetActivitiesUseCase extends IActivityUseCase {}
