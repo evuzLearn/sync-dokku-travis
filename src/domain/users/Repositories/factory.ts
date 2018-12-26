@@ -1,16 +1,8 @@
 import { MongoUsersRepository } from './MongoUsersRepository';
-
-let mongoUsersRepository: MongoUsersRepository;
-
-function getMongoRepository() {
-  if (!mongoUsersRepository) {
-    mongoUsersRepository = new MongoUsersRepository();
-  }
-  return mongoUsersRepository;
-}
+import { generateSingleton } from '../../lib/utils/singleton';
 
 export class UsersRepositoryFactory {
   static mongoUsersRepository = () => {
-    return getMongoRepository();
+    return generateSingleton(MongoUsersRepository);
   };
 }
