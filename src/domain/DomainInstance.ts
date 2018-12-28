@@ -1,4 +1,4 @@
-import { Domain } from './lib/domain';
+import { Domain } from 'ts-domain';
 
 import { UsersUseCaseFactory } from './users/UseCases/factory';
 import { ActivityUseCaseFactory } from './activity/UseCases/factory';

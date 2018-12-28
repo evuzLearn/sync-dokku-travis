@@ -1,6 +1,6 @@
+import { IUseCase, IService } from 'ts-domain';
+
 import { IGetAllUsersUseCase } from './interfaces';
-import { IUseCase } from '../../lib/models/UseCase';
-import { IService } from '../../lib/models/Service';
 
 export class GetAllUsersUseCase implements IUseCase {
   private service: IService;

@@ -1,4 +1,5 @@
-import { IService } from '../../lib/models/Service';
+import { IService } from 'ts-domain';
+
 import { UsersRepository } from '../Repositories/UsersRepository';
 import { INewUserService, IExecuteNewUserService } from './interfaces';
 import { User } from '../Entities/User';

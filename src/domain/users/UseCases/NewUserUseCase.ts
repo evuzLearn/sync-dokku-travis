@@ -1,6 +1,6 @@
-import { IService } from '../../lib/models/Service';
+import { IService, IUseCase } from 'ts-domain';
+
 import { INewUserUseCase } from './interfaces';
-import { IUseCase } from '../../lib/models/UseCase';
 import { User } from '../Entities/User';
 
 export class NewUserUseCase implements IUseCase {

@@ -1,6 +1,6 @@
-import { IService } from '../../lib/models/Service';
+import { IService, IUseCase } from 'ts-domain';
+
 import { IGetActivitiesUseCase } from './interfaces';
-import { IUseCase } from '../../lib/models/UseCase';
 import { Activity } from '../Entities/Activity';
 
 export class GetActivitiesByUserIdUseCase implements IUseCase {

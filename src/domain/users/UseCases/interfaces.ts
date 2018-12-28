@@ -1,4 +1,4 @@
-import { IService } from '../../lib/models/Service';
+import { IService } from 'ts-domain';
 
 interface IUserUseCase {
   service: IService;

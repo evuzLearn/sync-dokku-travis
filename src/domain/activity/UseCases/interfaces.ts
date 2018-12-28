@@ -1,4 +1,5 @@
-import { IService } from '../../lib/models/Service';
+import { IService } from 'ts-domain';
+
 import { Activity } from '../Entities/Activity';
 
 export interface IActivityUseCase {

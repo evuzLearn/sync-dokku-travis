@@ -1,4 +1,5 @@
-import { IService } from '../../lib/models/Service';
+import { IService } from 'ts-domain';
+
 import { ActivityRepository } from '../Repositories/ActivityRepository';
 import { Activity } from '../Entities/Activity';
 import { INewExpense } from './interfaces';
