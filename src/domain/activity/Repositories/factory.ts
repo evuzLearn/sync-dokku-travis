@@ -1,16 +1,8 @@
 import { MongoActivityRepository } from './MongoActivityRepository';
+import { Singleton } from 'ts-domain';
 
-let mongoActivityRepository: MongoActivityRepository;
-
-function getMongoRepository() {
-  if (!mongoActivityRepository) {
-    mongoActivityRepository = new MongoActivityRepository();
-  }
-  return mongoActivityRepository;
-}
+const mongoActivityRepository = new Singleton(MongoActivityRepository);
 
 export class ActivityRepositoryFactory {
-  static mongoActivityRepository = () => {
-    return getMongoRepository();
-  };
+  static mongoActivityRepository = () => mongoActivityRepository.getInstance();
 }

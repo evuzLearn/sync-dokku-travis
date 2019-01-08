@@ -21,13 +21,14 @@
     "mongodb": "^3.1.10",
     "node-telegram-bot-api": "^0.30.0",
     "reflect-metadata": "^0.1.10",
-    "ts-domain": "^1.0.6",
+    "ts-domain": "^1.2.4",
     "typeorm": "0.2.9"
   },
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon --watch 'src/**/*.ts' -r dotenv/config --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
-    "format": "prettier --write 'src/**/*.ts'"
+    "format": "prettier --write 'src/**/*.ts'",
+    "domain": "ts-domain"
   },
   "husky": {
     "hooks": {
@@ -40,5 +41,6 @@
       "prettier --write",
       "git add"
     ]
-  }
+  },
+  "domain": "./src/domain"
 }

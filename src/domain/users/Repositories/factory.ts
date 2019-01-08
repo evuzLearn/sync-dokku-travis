@@ -1,8 +1,8 @@
 import { MongoUsersRepository } from './MongoUsersRepository';
-import { generateSingleton } from 'ts-domain';
+import { Singleton } from 'ts-domain';
+
+const mongoUsersRepository = new Singleton(MongoUsersRepository);
 
 export class UsersRepositoryFactory {
-  static mongoUsersRepository = () => {
-    return generateSingleton(MongoUsersRepository);
-  };
+  static mongoUsersRepository = () => mongoUsersRepository.getInstance();
 }
