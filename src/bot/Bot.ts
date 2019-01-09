@@ -49,14 +49,6 @@ export class Bot {
     });
   };
 
-  public onReplyMessage = ({ chatId, messageId }: IOnReplyMessage): Promise<{ msg: TelegramBot.Message }> => {
-    return new Promise(res => {
-      this.bot.onReplyToMessage(chatId, messageId, msg => {
-        res({ msg });
-      });
-    });
-  };
-
   private sendMessage = ({ chatId, text, opts }: ISendMessage): Promise<TelegramBot.Message> => {
     return this.bot.sendMessage(chatId, text, opts);
   };
@@ -75,6 +67,14 @@ export class Bot {
         botFunctions: this.callbackQueryFunctions,
       }).then(() => {
         this.bot.answerCallbackQuery(callbackQuery.id);
+      });
+    });
+  };
+
+  private onReplyMessage = ({ chatId, messageId }: IOnReplyMessage): Promise<{ msg: TelegramBot.Message }> => {
+    return new Promise(res => {
+      this.bot.onReplyToMessage(chatId, messageId, msg => {
+        res({ msg });
       });
     });
   };
