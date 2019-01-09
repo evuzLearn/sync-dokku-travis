@@ -67,7 +67,7 @@ function methods() {
         },
         {
           text: 'No',
-          callback_data: `${CallbackQuery}.${CallbackQueryAddActivity.N}`,
+          callback_data: `${type}.${CallbackQueryAddActivity.N}`,
         },
       ],
     ],
