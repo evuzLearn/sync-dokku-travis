@@ -44,9 +44,11 @@ export class Bot {
   };
 
   public addTextListener = ({ regex, fn }: IAddTextListener) => {
-    this.bot.onText(regex, (msg, match) => {
-      fn({ msg, match, botFunctions: this.textFunctions });
-    });
+    if (regex) {
+      this.bot.onText(regex, (msg, match) => {
+        fn({ msg, match, botFunctions: this.textFunctions });
+      });
+    }
   };
 
   private sendMessage = ({ chatId, text, opts }: ISendMessage): Promise<TelegramBot.Message> => {

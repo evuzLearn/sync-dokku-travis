@@ -4,6 +4,7 @@ import { StartFunctionBot } from './StartFunctionBot';
 import { ExpenseFunctionBot, IncomeFunctionBot } from './ActivityFunctionBot';
 import { FunctionBot } from './models/FunctionBot';
 import { GetActivitiesFunctionBot } from './GetActivitiesFunctionBot';
+import { CalendarBot } from './CalendarBot';
 
 export function addListeners({ bot }: { bot: Bot }) {
   const botFunctions: FunctionBot[] = [
@@ -12,6 +13,7 @@ export function addListeners({ bot }: { bot: Bot }) {
     new ExpenseFunctionBot(),
     new IncomeFunctionBot(),
     new GetActivitiesFunctionBot(),
+    new CalendarBot(),
   ];
 
   botFunctions.forEach(botFunction => {
