@@ -11,16 +11,23 @@ import {
   getYear,
   addYears,
   startOfDay,
+  lastDayOfMonth,
 } from 'date-fns';
-import { InlineKeyboardMarkup, InlineKeyboardButton, EditMessageTextOptions } from 'node-telegram-bot-api';
+import {
+  InlineKeyboardMarkup,
+  InlineKeyboardButton,
+  EditMessageTextOptions,
+  SendMessageOptions,
+} from 'node-telegram-bot-api';
 
 import { FunctionBot } from '../models/FunctionBot';
-import { IAddCallbackQuery, ICallbackQueryFunction } from '../../interfaces';
+import { IAddCallbackQuery, ICallbackQueryFunction, ITelegramBotOnText } from '../../interfaces';
 import {
   IKeyboardCalendarKeyboardBot,
   CallbackQuery,
   IKeyboardButtonDayCalendarKeyboardBot,
   ICalendarKeyboardBot,
+  CallbackQueryDataKeys,
 } from './types';
 import { sliceArrayIntoGroups } from '../../../utils/sliceArrayIntoGroups';
 
@@ -32,7 +39,17 @@ export class CalendarKeyboardBot extends FunctionBot {
     this.regex = regex;
   }
 
-  public execute() {}
+  public execute = ({ msg, botFunctions }: ITelegramBotOnText) => {
+    const chatId = msg.chat.id;
+    const opts: SendMessageOptions = {
+      reply_markup: this.keyboard({ date: Date.now(), key: CallbackQuery.Key }),
+    };
+    botFunctions.sendMessage({
+      chatId,
+      opts,
+      text: `/date`,
+    });
+  };
 
   public callbackQuery(): IAddCallbackQuery[] {
     return [
@@ -43,7 +60,7 @@ export class CalendarKeyboardBot extends FunctionBot {
     ];
   }
 
-  public keyboard({ date: d, key }: IKeyboardCalendarKeyboardBot): InlineKeyboardMarkup {
+  public keyboard = ({ date: d, key }: IKeyboardCalendarKeyboardBot): InlineKeyboardMarkup => {
     const date = startOfMonth(d).getTime();
     return {
       inline_keyboard: [
@@ -71,9 +88,9 @@ export class CalendarKeyboardBot extends FunctionBot {
         ],
       ],
     };
-  }
+  };
 
-  public keyboardOfMonths({ date: d, key }: IKeyboardCalendarKeyboardBot): InlineKeyboardMarkup {
+  public keyboardOfMonths = ({ date: d, key }: IKeyboardCalendarKeyboardBot): InlineKeyboardMarkup => {
     const date = startOfYear(d).getTime();
     const year = getYear(date);
     return {
@@ -95,17 +112,17 @@ export class CalendarKeyboardBot extends FunctionBot {
         ...this.keyboardButtonsMonth({ key, date }),
       ],
     };
-  }
+  };
 
-  private keyboardDaysNameButton(): InlineKeyboardButton[] {
+  private keyboardDaysNameButton = (): InlineKeyboardButton[] => {
     const sunday = startOfWeek(Date.now());
     return Array.from({ length: 7 }).map((_, i) => ({
       text: format(addDays(sunday, i), 'dd'),
       callback_data: `${CallbackQuery.Key}.${CallbackQuery.EmptyButton}`,
     }));
-  }
+  };
 
-  private keyboardButtonsMonth({ date, key }: IKeyboardCalendarKeyboardBot): InlineKeyboardButton[][] {
+  private keyboardButtonsMonth = ({ date, key }: IKeyboardCalendarKeyboardBot): InlineKeyboardButton[][] => {
     const year = startOfYear(date).getTime();
     const arrayOfMonths = Array.from({ length: 12 }).map((_, i) => {
       const month = addMonths(year, i);
@@ -115,28 +132,35 @@ export class CalendarKeyboardBot extends FunctionBot {
       };
     });
     return sliceArrayIntoGroups(arrayOfMonths, 4);
-  }
+  };
 
-  private keyboardButtonDay({ date, key }: IKeyboardButtonDayCalendarKeyboardBot = <any>{}): InlineKeyboardButton {
+  private keyboardButtonDay = (
+    { date, key }: IKeyboardButtonDayCalendarKeyboardBot = <any>{},
+  ): InlineKeyboardButton => {
     const text = date ? `${getDate(date)}` : ' ';
     const data = date ? `${key}.${date}` : `${CallbackQuery.Key}.${CallbackQuery.EmptyButton}`;
     return {
       text,
       callback_data: data,
     };
-  }
+  };
 
-  private keyboardButtonsDaysOfMonths(
+  private keyboardButtonsDaysOfMonths = (
     { date, key }: IKeyboardButtonDayCalendarKeyboardBot = <any>{},
-  ): InlineKeyboardButton[][] {
+  ): InlineKeyboardButton[][] => {
     const daysOfWeek = 7;
-    const dayOfWeek = getDay(date);
+    const firstDayOfMonth = startOfMonth(date);
+    const dayOfWeekFirstDayOfMonth = getDay(firstDayOfMonth);
+    const dayOfWeekFirstDayOfNextMonth = getDay(addMonths(firstDayOfMonth, 1));
     const days = Array.from(Array(getDaysInMonth(date)), (_, i) =>
       this.keyboardButtonDay({ key, date: addDays(date, i).getTime() }),
     );
-    const fillArray = Array(dayOfWeek).fill(this.keyboardButtonDay());
-    return sliceArrayIntoGroups([...fillArray, ...days], daysOfWeek);
-  }
+    const startFillArray = Array(dayOfWeekFirstDayOfMonth).fill(this.keyboardButtonDay());
+    const finishFillArray = Array(dayOfWeekFirstDayOfNextMonth ? daysOfWeek - dayOfWeekFirstDayOfNextMonth : 0).fill(
+      this.keyboardButtonDay(),
+    );
+    return sliceArrayIntoGroups([...startFillArray, ...days, ...finishFillArray], daysOfWeek);
+  };
 
   private callbackQueryFunction = ({ msg, data, botFunctions }: ICallbackQueryFunction) => {
     const options: EditMessageTextOptions = {
@@ -144,48 +168,66 @@ export class CalendarKeyboardBot extends FunctionBot {
       chat_id: msg.chat.id,
     };
 
-    switch (data[0]) {
+    switch (data[CallbackQueryDataKeys.Option]) {
       case CallbackQuery.EmptyButton:
         return Promise.resolve();
       case CallbackQuery.SetMonth: {
         const opts = {
           ...options,
-          reply_markup: this.keyboard({ date: +data[2], key: data[1] }),
+          reply_markup: this.keyboard({
+            date: +data[CallbackQueryDataKeys.Date],
+            key: data[CallbackQueryDataKeys.Key],
+          }),
         };
         return botFunctions.editMessageText({ opts, text: '/date' });
       }
       case CallbackQuery.Month: {
         const opts = {
           ...options,
-          reply_markup: this.keyboardOfMonths({ date: +data[2], key: data[1] }),
+          reply_markup: this.keyboardOfMonths({
+            date: +data[CallbackQueryDataKeys.Date],
+            key: data[CallbackQueryDataKeys.Key],
+          }),
         };
         return botFunctions.editMessageText({ opts, text: '/date' });
       }
       case CallbackQuery.NextMonth: {
         const opts = {
           ...options,
-          reply_markup: this.keyboard({ date: addMonths(+data[2], 1).getTime(), key: data[1] }),
+          reply_markup: this.keyboard({
+            date: addMonths(+data[CallbackQueryDataKeys.Date], 1),
+            key: data[CallbackQueryDataKeys.Key],
+          }),
         };
         return botFunctions.editMessageText({ opts, text: '/date' });
       }
       case CallbackQuery.PreviousMonth: {
         const opts = {
           ...options,
-          reply_markup: this.keyboard({ date: addMonths(+data[2], -1).getTime(), key: data[1] }),
+          reply_markup: this.keyboard({
+            date: addMonths(+data[CallbackQueryDataKeys.Date], -1),
+            key: data[CallbackQueryDataKeys.Key],
+          }),
         };
         return botFunctions.editMessageText({ opts, text: '/date' });
       }
       case CallbackQuery.NextYear: {
         const opts = {
           ...options,
-          reply_markup: this.keyboardOfMonths({ date: addYears(+data[2], 1).getTime(), key: data[1] }),
+          reply_markup: this.keyboardOfMonths({
+            date: addYears(+data[CallbackQueryDataKeys.Date], 1),
+            key: data[CallbackQueryDataKeys.Key],
+          }),
         };
         return botFunctions.editMessageText({ opts, text: '/date' });
       }
       case CallbackQuery.PreviousYear: {
         const opts = {
           ...options,
-          reply_markup: this.keyboardOfMonths({ date: addYears(+data[2], -1).getTime(), key: data[1] }),
+          reply_markup: this.keyboardOfMonths({
+            date: addYears(+data[CallbackQueryDataKeys.Date], -1),
+            key: data[CallbackQueryDataKeys.Key],
+          }),
         };
         return botFunctions.editMessageText({ opts, text: '/date' });
       }

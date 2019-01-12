@@ -7,7 +7,7 @@ import { GetActivitiesFunctionBot } from './GetActivitiesFunctionBot';
 import { CalendarKeyboardBot } from './CalendarKeyboardBot';
 
 export function addListeners({ bot }: { bot: Bot }) {
-  const calendarKeyboardBot = new CalendarKeyboardBot();
+  const calendarKeyboardBot = new CalendarKeyboardBot({ regex: /\/date/ });
 
   const botFunctions: FunctionBot[] = [
     new EchoFunctionBot(),

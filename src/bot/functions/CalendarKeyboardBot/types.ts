@@ -9,6 +9,12 @@ export enum CallbackQuery {
   PreviousYear = 'PREVIOUS_YEAR',
 }
 
+export enum CallbackQueryDataKeys {
+  Option,
+  Key,
+  Date,
+}
+
 export interface ICalendarKeyboardBot {
   regex?: RegExp | string;
 }
