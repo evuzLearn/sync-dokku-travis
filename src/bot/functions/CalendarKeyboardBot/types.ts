@@ -9,12 +9,16 @@ export enum CallbackQuery {
   PreviousYear = 'PREVIOUS_YEAR',
 }
 
-export interface IKeyboardCalendarBot {
+export interface ICalendarKeyboardBot {
+  regex?: RegExp | string;
+}
+
+export interface IKeyboardCalendarKeyboardBot {
   date: string | number | Date;
   key: string;
 }
 
-export interface IKeyboardButtonDayCalendarBot {
+export interface IKeyboardButtonDayCalendarKeyboardBot {
   date: number;
   key: string;
 }

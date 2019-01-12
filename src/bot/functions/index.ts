@@ -4,16 +4,18 @@ import { StartFunctionBot } from './StartFunctionBot';
 import { ExpenseFunctionBot, IncomeFunctionBot } from './ActivityFunctionBot';
 import { FunctionBot } from './models/FunctionBot';
 import { GetActivitiesFunctionBot } from './GetActivitiesFunctionBot';
-import { CalendarBot } from './CalendarBot';
+import { CalendarKeyboardBot } from './CalendarKeyboardBot';
 
 export function addListeners({ bot }: { bot: Bot }) {
+  const calendarKeyboardBot = new CalendarKeyboardBot();
+
   const botFunctions: FunctionBot[] = [
     new EchoFunctionBot(),
     new StartFunctionBot(),
-    new ExpenseFunctionBot(),
-    new IncomeFunctionBot(),
+    new ExpenseFunctionBot({ calendarKeyboardBot }),
+    new IncomeFunctionBot({ calendarKeyboardBot }),
     new GetActivitiesFunctionBot(),
-    new CalendarBot(),
+    calendarKeyboardBot,
   ];
 
   botFunctions.forEach(botFunction => {

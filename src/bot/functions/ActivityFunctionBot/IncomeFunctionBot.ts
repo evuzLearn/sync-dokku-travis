@@ -5,13 +5,20 @@ import { FunctionBot } from '../models/FunctionBot';
 import { ITelegramBotOnText, IAddCallbackQuery, ICallbackQueryFunction } from '../../interfaces';
 import { expenseFunctionBotMethods } from './methods';
 import { getDomain } from '../../../domain';
-import { CallbackQuery, CallbackQueryAddActivity } from './types';
-import { CalendarBot } from '../CalendarBot';
+import { CallbackQuery, CallbackQueryAddActivity, IIncomeFunctionBot } from './types';
+import { CalendarKeyboardBot } from '../CalendarKeyboardBot';
 
 export class IncomeFunctionBot extends FunctionBot {
   public regex = /\/income/;
 
-  public execute({ msg, botFunctions }: ITelegramBotOnText) {
+  public calendarKeyboarBot: CalendarKeyboardBot;
+
+  constructor({ calendarKeyboardBot }: IIncomeFunctionBot) {
+    super();
+    this.calendarKeyboarBot = calendarKeyboardBot;
+  }
+
+  public execute = ({ msg, botFunctions }: ITelegramBotOnText) => {
     const chatId = msg.chat.id;
     const userId = msg.from.id;
     const expense = expenseFunctionBotMethods.getActivity({ userId, clean: true });
@@ -24,7 +31,7 @@ export class IncomeFunctionBot extends FunctionBot {
       })
       .then(({ concept }) => {
         const opts: SendMessageOptions = {
-          reply_markup: CalendarBot.keyboard({ date: Date.now(), key: CallbackQuery.DateIncome }),
+          reply_markup: this.calendarKeyboarBot.keyboard({ date: Date.now(), key: CallbackQuery.DateIncome }),
         };
         expense.concept = concept;
         botFunctions.sendMessage({
@@ -33,9 +40,9 @@ export class IncomeFunctionBot extends FunctionBot {
           text: `Select the day you received the money`,
         });
       });
-  }
+  };
 
-  public callbackQuery(): IAddCallbackQuery[] {
+  public callbackQuery = (): IAddCallbackQuery[] => {
     return [
       {
         key: CallbackQuery.AddIncome,
@@ -46,9 +53,9 @@ export class IncomeFunctionBot extends FunctionBot {
         callbackQueryFunction: this.dateIncome,
       },
     ];
-  }
+  };
 
-  private dateIncome({ msg, data, botFunctions }: ICallbackQueryFunction) {
+  private dateIncome = ({ msg, data, botFunctions }: ICallbackQueryFunction) => {
     const expense = expenseFunctionBotMethods.getActivity({ userId: msg.from.id });
     const { amount, concept } = expense;
     const date = +data[0];
@@ -62,9 +69,9 @@ export class IncomeFunctionBot extends FunctionBot {
       opts,
       text: `Income. \nAmount: ${amount}€. \nConcept: ${concept}. \nDate: ${format(date, 'DD MMM YYYY')}\nIs correct?`,
     });
-  }
+  };
 
-  private acceptIncome({ msg, data, botFunctions }: ICallbackQueryFunction) {
+  private acceptIncome = ({ msg, data, botFunctions }: ICallbackQueryFunction) => {
     const userId = msg.from.id;
     const opts: EditMessageTextOptions = {
       message_id: msg.message_id,
@@ -80,5 +87,5 @@ export class IncomeFunctionBot extends FunctionBot {
       .get({ useCase: 'new_income' })
       .execute({ activity: { amount, concept, userId, date: startOfDay(Date.now()).getTime() } });
     return botFunctions.editMessageText({ opts, text: 'Your income have been added' });
-  }
+  };
 }
