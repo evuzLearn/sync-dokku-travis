@@ -1,32 +1,25 @@
 import { SendMessageOptions, EditMessageTextOptions } from 'node-telegram-bot-api';
-import { startOfDay, format } from 'date-fns';
+import { format } from 'date-fns';
 
-import { FunctionBot } from '../models/FunctionBot';
 import { ITelegramBotOnText, IAddCallbackQuery, ICallbackQueryFunction } from '../../interfaces';
-import { expenseFunctionBotMethods } from './methods';
+import { ActivityFunctionBot } from './ActivityFunctionBot';
 import { getDomain } from '../../../domain';
-import { CallbackQuery, CallbackQueryAddActivity, IExpenseFunctionBot } from './types';
+import { CallbackQuery, CallbackQueryAddActivity } from './types';
 import { CalendarKeyboardBot } from '../CalendarKeyboardBot';
 
-export class ExpenseFunctionBot extends FunctionBot {
+export class ExpenseFunctionBot extends ActivityFunctionBot {
   public regex = /\/expense/;
   public calendarKeyboarBot: CalendarKeyboardBot;
-
-  constructor({ calendarKeyboardBot }: IExpenseFunctionBot) {
-    super();
-    this.calendarKeyboarBot = calendarKeyboardBot;
-  }
 
   public execute = ({ msg, botFunctions }: ITelegramBotOnText) => {
     const chatId = msg.chat.id;
     const userId = msg.from.id;
-    const expense = expenseFunctionBotMethods.getActivity({ userId, clean: true });
+    const expense = this.getActivity({ userId, clean: true });
 
-    expenseFunctionBotMethods
-      .askAmount({ msg, botFunctions })
+    this.askAmount({ msg, botFunctions })
       .then(({ amount }) => {
         expense.amount = amount;
-        return expenseFunctionBotMethods.askConcept({ msg, botFunctions });
+        return this.askConcept({ msg, botFunctions });
       })
       .then(({ concept }) => {
         const opts: SendMessageOptions = {
@@ -55,18 +48,18 @@ export class ExpenseFunctionBot extends FunctionBot {
   };
 
   private dateExpense = ({ msg, data, botFunctions }: ICallbackQueryFunction) => {
-    const expense = expenseFunctionBotMethods.getActivity({ userId: msg.from.id });
+    const expense = this.getActivity({ userId: msg.from.id });
     const { amount, concept } = expense;
     const date = +data[0];
     const opts: EditMessageTextOptions = {
       message_id: msg.message_id,
       chat_id: msg.chat.id,
-      reply_markup: expenseFunctionBotMethods.confirmKeyboard(CallbackQuery.AddExpense),
+      reply_markup: this.confirmKeyboard(CallbackQuery.AddExpense),
     };
     expense.date = date;
     return botFunctions.editMessageText({
       opts,
-      text: `Expense. \nAmount: ${amount}€. \nConcept: ${concept}. \nDate: ${format(date, 'DD/MMM/YYYY')}\nIs correct?`,
+      text: `Expense. \nAmount: ${amount}€. \nConcept: ${concept}. \nDate: ${format(date, 'DD MMM YYYY')}\nIs correct?`,
     });
   };
 
@@ -81,7 +74,7 @@ export class ExpenseFunctionBot extends FunctionBot {
       return botFunctions.editMessageText({ opts, text: 'You can introduce a new /expense' });
     }
     const domain = getDomain();
-    const { amount, concept, date } = expenseFunctionBotMethods.getActivity({ userId });
+    const { amount, concept, date } = this.getActivity({ userId });
     domain.get({ useCase: 'new_expense' }).execute({ activity: { amount, concept, userId, date } });
     return botFunctions.editMessageText({ opts, text: 'Your expense have been added' });
   };

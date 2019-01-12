@@ -16,5 +16,7 @@ export interface IActivityFunctionBot {
   calendarKeyboardBot: CalendarKeyboardBot;
 }
 
-export interface IExpenseFunctionBot extends IActivityFunctionBot {}
-export interface IIncomeFunctionBot extends IActivityFunctionBot {}
+export interface IGetActivityActivityFunctionBot {
+  userId: number | string;
+  clean?: boolean;
+}
