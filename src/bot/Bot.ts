@@ -29,8 +29,12 @@ export class Bot {
     };
   }
 
-  constructor({ token }: IBot) {
+  constructor({ token, textListeners }: IBot) {
     this.bot = new TelegramBot(token, { polling: true });
+    textListeners.forEach(listener => {
+      this.addTextListener(listener.add());
+      this.addCallbackQuery(listener.callbackQuery());
+    });
     this.onCallbackQuery();
   }
 

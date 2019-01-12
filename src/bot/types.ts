@@ -1,4 +1,5 @@
 import { Message, SendMessageOptions, EditMessageTextOptions } from 'node-telegram-bot-api';
+import { FunctionBot } from './functions/models/FunctionBot';
 
 export interface ITelegramBotOnText {
   msg: Message;
@@ -8,6 +9,7 @@ export interface ITelegramBotOnText {
 
 export interface IBot {
   token: string;
+  textListeners?: FunctionBot[];
 }
 
 export interface IBotTextFunctions {
