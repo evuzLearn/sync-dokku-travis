@@ -11,7 +11,6 @@ import {
   getYear,
   addYears,
   startOfDay,
-  lastDayOfMonth,
 } from 'date-fns';
 import {
   InlineKeyboardMarkup,
@@ -21,7 +20,7 @@ import {
 } from 'node-telegram-bot-api';
 
 import { FunctionBot } from '../models/FunctionBot';
-import { IAddCallbackQuery, ICallbackQueryFunction, ITelegramBotOnText } from '../../interfaces';
+import { IAddCallbackQuery, ICallbackQueryFunction, ITelegramBotOnText } from '../../types';
 import {
   IKeyboardCalendarKeyboardBot,
   CallbackQuery,

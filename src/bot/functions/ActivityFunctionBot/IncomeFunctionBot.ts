@@ -1,7 +1,7 @@
 import { SendMessageOptions, EditMessageTextOptions } from 'node-telegram-bot-api';
 import { startOfDay, format } from 'date-fns';
 
-import { ITelegramBotOnText, IAddCallbackQuery, ICallbackQueryFunction } from '../../interfaces';
+import { ITelegramBotOnText, IAddCallbackQuery, ICallbackQueryFunction } from '../../types';
 import { ActivityFunctionBot } from './ActivityFunctionBot';
 import { getDomain } from '../../../domain';
 import { CallbackQuery, CallbackQueryAddActivity } from './types';

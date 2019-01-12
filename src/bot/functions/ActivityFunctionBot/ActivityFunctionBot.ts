@@ -1,6 +1,6 @@
 import { isNumber } from '../../../utils/isNumber';
 import { InlineKeyboardMarkup } from 'node-telegram-bot-api';
-import { ITelegramBotOnText } from '../../interfaces';
+import { ITelegramBotOnText } from '../../types';
 import { Activity } from '../../../domain/activity/Entities/Activity';
 import {
   CallbackQuery,

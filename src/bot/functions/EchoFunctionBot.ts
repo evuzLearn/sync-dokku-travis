@@ -1,5 +1,5 @@
 import { FunctionBot } from './models/FunctionBot';
-import { ITelegramBotOnText } from '../interfaces';
+import { ITelegramBotOnText } from '../types';
 
 export class EchoFunctionBot extends FunctionBot {
   public regex = /\/echo (.+)/;

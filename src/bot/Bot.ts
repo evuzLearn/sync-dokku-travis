@@ -10,7 +10,7 @@ import {
   ICallbackQueryFunction,
   IBotCallbackQueryFunctions,
   IEditMessage,
-} from './interfaces';
+} from './types';
 
 export class Bot {
   private bot: TelegramBot;

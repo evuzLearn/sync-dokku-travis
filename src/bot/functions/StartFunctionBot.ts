@@ -1,5 +1,5 @@
 import { FunctionBot } from './models/FunctionBot';
-import { ITelegramBotOnText } from '../interfaces';
+import { ITelegramBotOnText } from '../types';
 import { getDomain } from '../../domain';
 import { User } from '../../domain/users/Entities/User';
 import { User as TelegramUser } from 'node-telegram-bot-api';

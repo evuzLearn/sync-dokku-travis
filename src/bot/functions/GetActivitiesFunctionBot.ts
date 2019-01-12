@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 
 import { FunctionBot } from './models/FunctionBot';
-import { ITelegramBotOnText } from '../interfaces';
+import { ITelegramBotOnText } from '../types';
 import { getDomain } from '../../domain';
 
 export class GetActivitiesFunctionBot extends FunctionBot {

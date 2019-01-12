@@ -1,4 +1,4 @@
-import { ITelegramBotOnText, IAddTextListener, IAddCallbackQuery } from '../../interfaces';
+import { ITelegramBotOnText, IAddTextListener, IAddCallbackQuery } from '../../types';
 
 export abstract class FunctionBot {
   abstract regex: RegExp;
