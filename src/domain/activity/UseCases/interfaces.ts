@@ -8,4 +8,5 @@ export interface IActivityUseCase {
 
 export interface INewExpenseUseCase extends IActivityUseCase {}
 export interface INewIncomeUseCase extends IActivityUseCase {}
-export interface IGetActivitiesUseCase extends IActivityUseCase {}
+export interface IGetActivitiesByUserIdUseCase extends IActivityUseCase {}
+export interface IGetActivitiesByMonthUseCase extends IActivityUseCase {}

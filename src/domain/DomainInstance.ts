@@ -10,7 +10,7 @@ export class DomainInstance {
       new_user: UsersUseCaseFactory.newUsersUseCase(),
       new_expense: ActivityUseCaseFactory.newExpenseUseCase(),
       new_income: ActivityUseCaseFactory.newIncomeUseCase(),
-      get_activities_by_user_id: ActivityUseCaseFactory.getActivitiesByUserIdUseCase(),
+      get_activities_by_month: ActivityUseCaseFactory.getActivitiesByMonthUseCase(),
     };
   }
 

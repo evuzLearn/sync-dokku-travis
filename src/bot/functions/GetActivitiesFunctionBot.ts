@@ -12,8 +12,8 @@ export class GetActivitiesFunctionBot extends FunctionBot {
     const userId = msg.from.id;
     const domain = getDomain();
     domain
-      .get({ useCase: 'get_activities_by_user_id' })
-      .execute({ userId })
+      .get({ useCase: 'get_activities_by_month' })
+      .execute({ userId, date: Date.now() })
       .then(activities => {
         const summary = activities.map(
           ({ amount, concept, date }) => `${format(date, 'DD/MM/YYYY')} ${concept} => ${amount}€`,

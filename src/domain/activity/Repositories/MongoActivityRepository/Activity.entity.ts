@@ -12,6 +12,9 @@ export class Activity extends ActivityEntity {
   concept: string;
   @Column()
   amount: number;
+  @Index()
+  @Column()
+  month?: number;
   @Column()
   date?: number;
 

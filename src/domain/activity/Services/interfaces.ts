@@ -6,3 +6,4 @@ export interface IActivityService {
 
 export interface INewExpense extends IActivityService {}
 export interface IGetActivitiesByUserId extends IActivityService {}
+export interface IGetActivitiesByMonth extends IActivityService {}

@@ -16,6 +16,6 @@ export class NewIncomeService implements IService {
       ...rest,
       amount: amount > 0 ? amount : -amount,
     };
-    return this.repository.newActivity({ activity: new Activity(activity) });
+    return this.repository.newActivity({ activity });
   }
 }
