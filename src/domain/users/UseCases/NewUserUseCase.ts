@@ -1,6 +1,6 @@
 import { IService, IUseCase } from 'ts-domain';
 
-import { INewUserUseCase } from './interfaces';
+import { INewUserUseCase } from './types';
 import { User } from '../Entities/User';
 
 export class NewUserUseCase implements IUseCase {

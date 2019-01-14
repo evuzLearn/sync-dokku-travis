@@ -1,6 +1,6 @@
 import { IService, IUseCase } from 'ts-domain';
 
-import { IGetActivitiesByMonthUseCase } from './interfaces';
+import { IGetActivitiesByMonthUseCase } from './types';
 import { Activity } from '../Entities/Activity';
 
 export class GetActivitiesByMonthUseCase implements IUseCase {

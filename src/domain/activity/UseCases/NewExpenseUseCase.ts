@@ -1,6 +1,6 @@
 import { IService, IUseCase } from 'ts-domain';
 
-import { INewExpenseUseCase } from './interfaces';
+import { INewExpenseUseCase } from './types';
 import { Activity } from '../Entities/Activity';
 
 export class NewExpenseUseCase implements IUseCase {

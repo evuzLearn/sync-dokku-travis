@@ -1,7 +1,7 @@
 import { IService } from 'ts-domain';
 
 import { UsersRepository } from '../Repositories/UsersRepository';
-import { INewUserService, IExecuteNewUserService } from './interfaces';
+import { INewUserService, IExecuteNewUserService } from './types';
 import { User } from '../Entities/User';
 
 export class NewUsersService implements IService {

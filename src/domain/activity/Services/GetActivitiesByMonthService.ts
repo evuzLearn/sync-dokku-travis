@@ -2,7 +2,7 @@ import { IService } from 'ts-domain';
 
 import { ActivityRepository } from '../Repositories/ActivityRepository';
 import { Activity } from '../Entities/Activity';
-import { IGetActivitiesByMonth } from './interfaces';
+import { IGetActivitiesByMonth } from './types';
 
 export class GetActivitiesByMonthService implements IService {
   private repository: ActivityRepository;
