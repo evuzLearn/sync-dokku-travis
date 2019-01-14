@@ -19,7 +19,7 @@ export class MongoActivityRepository implements ActivityRepository {
     return this.activityRepository.find({ where: { userId } });
   }
 
-  async getActivitiesByMonth({ userId, date }: { userId: Activity['userId']; date: number }): Promise<Activity[]> {
+  getActivitiesByMonth({ userId, date }: { userId: Activity['userId']; date: number }): Promise<Activity[]> {
     const firsDayOfMonth = startOfMonth(date).getTime();
     const lastDayOfMonth = endOfMonth(date).getTime();
     return this.activityRepository.find({ where: { userId, date: { $gt: firsDayOfMonth, $lt: lastDayOfMonth } } });
