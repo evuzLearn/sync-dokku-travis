@@ -72,10 +72,8 @@ export class IncomeFunctionBot extends ActivityFunctionBot {
       return botFunctions.editMessageText({ opts, text: 'You can introduce a new /income' });
     }
     const domain = getDomain();
-    const { amount, concept } = this.getActivity({ userId });
-    domain
-      .get({ useCase: 'new_income' })
-      .execute({ activity: { amount, concept, userId, date: startOfDay(Date.now()).getTime() } });
+    const { amount, concept, date } = this.getActivity({ userId });
+    domain.get({ useCase: 'new_income' }).execute({ activity: { amount, concept, userId, date } });
     return botFunctions.editMessageText({ opts, text: 'Your income have been added' });
   };
 }
