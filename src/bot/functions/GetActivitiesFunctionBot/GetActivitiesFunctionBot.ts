@@ -17,7 +17,7 @@ export class GetActivitiesFunctionBot extends FunctionBot {
     domain
       .get({ useCase: 'get_activities_by_month' })
       .execute({ userId, date: Date.now() })
-      .then(activities => {
+      .then(({ results: activities }) => {
         const text = this.activitiesToSummary({ activities });
         const opts = { reply_markup: this.inlineKeyboard({ date: Date.now() }) };
         botFunctions.sendMessage({ chatId, text, opts });
@@ -55,7 +55,7 @@ export class GetActivitiesFunctionBot extends FunctionBot {
   };
 
   private editMessage = async ({ date, userId, options }: { date: number; userId: string | number; options: any }) => {
-    const activities = await getDomain()
+    const { results: activities } = await getDomain()
       .get({ useCase: 'get_activities_by_month' })
       .execute({ userId, date });
     const text = this.activitiesToSummary({ activities });

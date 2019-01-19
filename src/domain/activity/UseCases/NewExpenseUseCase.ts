@@ -10,7 +10,7 @@ export class NewExpenseUseCase implements IUseCase {
     this.service = service;
   }
 
-  execute({ activity }: { activity: Activity }) {
+  execute({ activity }: { activity: Partial<Activity> }) {
     return this.service.execute({ activity });
   }
 }

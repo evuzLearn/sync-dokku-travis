@@ -2,12 +2,12 @@ import { IService } from 'ts-domain';
 
 import { ActivityRepository } from '../Repositories/ActivityRepository';
 import { Activity } from '../Entities/Activity';
-import { INewExpense } from './types';
+import { INewExpenseService } from './types';
 
 export class NewIncomeService implements IService {
   private repository: ActivityRepository;
 
-  constructor({ repository }: INewExpense) {
+  constructor({ repository }: INewExpenseService) {
     this.repository = repository;
   }
 

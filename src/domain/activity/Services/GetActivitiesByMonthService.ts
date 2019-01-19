@@ -1,17 +1,16 @@
 import { IService } from 'ts-domain';
 
-import { ActivityRepository } from '../Repositories/ActivityRepository';
-import { Activity } from '../Entities/Activity';
-import { IGetActivitiesByMonth } from './types';
+import { ActivityRepository, IGetActivitiesByMonth } from '../Repositories/ActivityRepository';
+import { IGetActivitiesByMonthService } from './types';
 
 export class GetActivitiesByMonthService implements IService {
   private repository: ActivityRepository;
 
-  constructor({ repository }: IGetActivitiesByMonth) {
+  constructor({ repository }: IGetActivitiesByMonthService) {
     this.repository = repository;
   }
 
-  execute({ userId, date }: { userId: Activity['userId']; date: number }) {
-    return this.repository.getActivitiesByMonth({ userId, date });
+  execute({ userId, date, take, page }: IGetActivitiesByMonth) {
+    return this.repository.getActivitiesByMonth({ userId, date, take, page });
   }
 }

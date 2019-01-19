@@ -4,6 +4,6 @@ export interface IActivityService {
   repository: ActivityRepository;
 }
 
-export interface INewExpense extends IActivityService {}
-export interface IGetActivitiesByUserId extends IActivityService {}
-export interface IGetActivitiesByMonth extends IActivityService {}
+export interface INewExpenseService extends IActivityService {}
+export interface IGetActivitiesByUserIdService extends IActivityService {}
+export interface IGetActivitiesByMonthService extends IActivityService {}

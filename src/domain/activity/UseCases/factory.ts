@@ -3,6 +3,7 @@ import { NewIncomeUseCase } from './NewIncomeUseCase';
 import { ActivityServiceFactory } from '../Services/factory';
 import { GetActivitiesByUserIdUseCase } from './GetActivitiesByUserIdUseCase';
 import { GetActivitiesByMonthUseCase } from './GetActivitiesByMonthUseCase';
+import { GetActivitiesByMonthPaginatedUseCase } from './GetActivitiesByMonthPaginatedUseCase';
 
 export class ActivityUseCaseFactory {
   static newExpenseUseCase = () => new NewExpenseUseCase({ service: ActivityServiceFactory.newExpenseService() });
@@ -11,4 +12,6 @@ export class ActivityUseCaseFactory {
     new GetActivitiesByUserIdUseCase({ service: ActivityServiceFactory.getActivitiesByUserIdService() });
   static getActivitiesByMonthUseCase = () =>
     new GetActivitiesByMonthUseCase({ service: ActivityServiceFactory.getActivitiesByMonthService() });
+  static getActivitiesByMonthPaginatedUseCase = () =>
+    new GetActivitiesByMonthPaginatedUseCase({ service: ActivityServiceFactory.getActivitiesByMonthService() });
 }

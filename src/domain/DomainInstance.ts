@@ -11,6 +11,7 @@ export class DomainInstance {
       new_expense: ActivityUseCaseFactory.newExpenseUseCase(),
       new_income: ActivityUseCaseFactory.newIncomeUseCase(),
       get_activities_by_month: ActivityUseCaseFactory.getActivitiesByMonthUseCase(),
+      get_activities_by_month_paginated: ActivityUseCaseFactory.getActivitiesByMonthPaginatedUseCase(),
     };
   }
 
