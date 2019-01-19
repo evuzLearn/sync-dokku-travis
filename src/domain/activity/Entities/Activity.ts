@@ -1,5 +1,5 @@
 export class Activity {
-  id: string;
+  id?: string;
   concept: string;
   amount: number;
   userId: string | number;
