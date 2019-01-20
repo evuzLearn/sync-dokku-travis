@@ -8,7 +8,8 @@ import { getDomain } from '../../../domain';
 import { Activity } from '../../../domain/activity/Entities/Activity';
 
 export class GetActivitiesFunctionBot extends FunctionBot {
-  public regex = /\/get_activities/;
+  public regex = /^\/get_activities$/;
+  protected callbackQueryKey: CallbackQuery = CallbackQuery.Key;
 
   public execute = ({ msg, botFunctions }: ITelegramBotOnText) => {
     const chatId = msg.chat.id;
@@ -27,10 +28,19 @@ export class GetActivitiesFunctionBot extends FunctionBot {
   public callbackQuery = (): IAddCallbackQuery[] => {
     return [
       {
-        key: CallbackQuery.Key,
+        key: this.callbackQueryKey,
         callbackQueryFunction: this.changeMonth,
       },
     ];
+  };
+
+  protected activitiesToSummary = ({ activities }: { activities: Activity[] }): string => {
+    const summary = activities.map(
+      ({ amount, concept, date }) => `${format(date, 'DD/MM/YYYY')} ${concept} => ${amount}€`,
+    );
+    const total = activities.reduce((acc, { amount }) => acc + amount, 0);
+    const lines = [...summary, `Total: ${total}€`];
+    return lines.join('\n');
   };
 
   private changeMonth = async ({ msg, data, botFunctions }: ICallbackQueryFunction) => {
@@ -61,15 +71,6 @@ export class GetActivitiesFunctionBot extends FunctionBot {
     const text = this.activitiesToSummary({ activities });
     const opts = { ...options, reply_markup: this.inlineKeyboard({ date }) };
     return { text, opts };
-  };
-
-  private activitiesToSummary = ({ activities }: { activities: Activity[] }): string => {
-    const summary = activities.map(
-      ({ amount, concept, date }) => `${format(date, 'DD/MM/YYYY')} ${concept} => ${amount}€`,
-    );
-    const total = activities.reduce((acc, { amount }) => acc + amount, 0);
-    const lines = [...summary, `Total: ${total}€`];
-    return lines.join('\n');
   };
 
   private inlineKeyboard = ({ date }: { date: number }): InlineKeyboardMarkup => {
