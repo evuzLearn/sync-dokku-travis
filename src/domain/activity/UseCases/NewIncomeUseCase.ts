@@ -2,10 +2,10 @@ import { IUseCase } from 'ts-domain';
 
 import { INewIncomeUseCase } from './types';
 import { Activity } from '../Entities/Activity';
-import { NewExpenseService } from '../Services/NewExpenseService';
+import { NewIncomeService } from '../Services/NewIncomeService';
 
 export class NewIncomeUseCase implements IUseCase {
-  private service: NewExpenseService;
+  private service: NewIncomeService;
 
   constructor({ service }: INewIncomeUseCase) {
     this.service = service;
