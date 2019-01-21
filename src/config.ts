@@ -1,4 +1,5 @@
 export const config = {
+  db_url: process.env.MONGO_URL,
   db_username: process.env.MONGO_USERNAME,
   db_password: process.env.MONGO_PASSWORD,
   db_database: process.env.MONGO_DB,

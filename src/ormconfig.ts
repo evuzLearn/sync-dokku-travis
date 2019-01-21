@@ -20,6 +20,7 @@ const ormConfig: MongoConnectionOptions = {
 export function getOrmConfig(): Promise<MongoConnectionOptions> {
   return Promise.resolve({
     ...ormConfig,
+    url: config.db_url,
     username: config.db_username,
     password: config.db_password,
     database: config.db_database,
