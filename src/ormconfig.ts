@@ -1,5 +1,8 @@
 import { MongoConnectionOptions } from 'typeorm/driver/mongodb/MongoConnectionOptions';
 
+import { Activity } from './domain/activity/Repositories/MongoActivityRepository/Activity.entity';
+import { User } from './domain/users/Repositories/MongoUsersRepository/User.entity';
+
 import { config } from './config';
 
 const ormConfig: MongoConnectionOptions = {
@@ -7,14 +10,7 @@ const ormConfig: MongoConnectionOptions = {
   synchronize: true,
   logging: false,
   useNewUrlParser: true,
-  entities: ['src/domain/**/*.entity.ts'],
-  migrations: ['src/migration/**/*.ts'],
-  subscribers: ['src/subscriber/**/*.ts'],
-  cli: {
-    entitiesDir: 'src/entity',
-    migrationsDir: 'src/migration',
-    subscribersDir: 'src/subscriber',
-  },
+  entities: [Activity, User],
 };
 
 export function getOrmConfig(): Promise<MongoConnectionOptions> {
