@@ -25,10 +25,12 @@
     "typeorm": "0.2.9"
   },
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "node build/index.js",
+    "build": "tsc",
     "dev": "nodemon --watch 'src/**/*.ts' -r dotenv/config --ignore 'src/**/*.spec.ts' --exec 'node --inspect -r ts-node/register' src/index.ts",
     "format": "prettier --write 'src/**/*.ts'",
-    "domain": "ts-domain"
+    "domain": "ts-domain",
+    "postinstall": "npm run build"
   },
   "husky": {
     "hooks": {
