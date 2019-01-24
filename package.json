@@ -3,13 +3,16 @@
   "version": "0.0.1",
   "description": "Awesome project developed with TypeORM.",
   "devDependencies": {
+    "@types/jest": "^23.3.13",
     "@types/node": "^10.12.15",
     "@types/node-telegram-bot-api": "^0.30.3",
     "dotenv": "^6.2.0",
     "husky": "^1.2.1",
+    "jest": "^23.6.0",
     "lint-staged": "^8.1.0",
     "nodemon": "^1.18.8",
     "prettier": "^1.15.3",
+    "ts-jest": "^23.10.5",
     "ts-node": "7.0.1",
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.1",
@@ -28,8 +31,10 @@
     "start": "node build/index.js",
     "build": "tsc",
     "dev": "nodemon --watch 'src/**/*.ts' -r dotenv/config --ignore 'src/**/*.spec.ts' --exec 'node --inspect -r ts-node/register' src/index.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "coverage": "jest --coverage",
     "format": "prettier --write 'src/**/*.ts'",
-    "domain": "ts-domain",
     "postinstall": "npm run build"
   },
   "husky": {
@@ -44,5 +49,17 @@
       "git add"
     ]
   },
-  "domain": "./src/domain"
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.ts$",
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ]
+  }
 }
