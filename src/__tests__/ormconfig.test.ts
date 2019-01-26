@@ -13,7 +13,7 @@ mock.config = {
 };
 
 describe('ORM Config', () => {
-  test('Should have db params', () => {
+  test('should have enviroment params', () => {
     expect.assertions(6);
     getOrmConfig().then(config => {
       const configItems = Object.keys(config).map(key => ({ [key]: config[key] }));
@@ -26,7 +26,7 @@ describe('ORM Config', () => {
     });
   });
 
-  test('Should have db params', () => {
+  test('should have database params', () => {
     expect.assertions(5);
     getOrmConfig().then(config => {
       const configItems = Object.keys(config);

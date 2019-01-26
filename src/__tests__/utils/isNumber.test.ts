@@ -1,6 +1,6 @@
 import { isNumber } from '../../utils/isNumber';
 
-describe('Utils@isNumber', () => {
+describe('Util isNumber', () => {
   test('should return false', () => {
     expect(isNumber('One')).toEqual(false);
   });
