@@ -1,3 +1,7 @@
+language: node_js
+node_js:
+  - "10"
+dist: trusty
 after_success:
   - eval "$(ssh-agent -s)" # start the ssh agent
   - chmod 600 .travis/deploy.key # this key should have push access
