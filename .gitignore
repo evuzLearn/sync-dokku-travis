@@ -8,3 +8,7 @@ temp/
 
 package-lock.json
 .env
+
+# deployment keys
+.travis/*.key
+.travis/*.key.pub
